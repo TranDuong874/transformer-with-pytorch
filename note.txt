@@ -1,0 +1,45 @@
+
+    Self attention
+    Self-attention allows the model to relate words to each other
+    Q = what this word is looking for
+    K = what this word actually contain
+    V = actual information this word holds
+
+    Attention score = QK^T, why dot product? Dot product gives you information on how close 2 vectors are to each other
+
+    Q K V are embedidng transformations
+    Q K V are just input sentences 
+    Given input embedding X of size batch_size x seq_len x d_model
+    W_Q is the learnable weight of Q = XW_Q  -> optimizes W_Q leads to best word relationship for attention
+    Softmax(Q x K^T) ---> How intense the relationship between 2 word
+    Softmax(Q x K^T) x V = Attention dim = seq_len x d_model
+
+    Flow of data
+    Input: batch x seq_length * 
+      
+    -> Embedding: batch x seq_length x d_model
+        
+    -> Position encoding (PE): batch x seq_length x d_model 
+        
+    -> Multi head Attention: W_Q, W_K, W_V @ PE = Q, K, V
+
+    -> Attention score: softmax(QK^T.normalized()) x V
+
+    -> Concatenate results batch x seq_length, d_model
+
+
+    Input (batch x seq_length)
+    ↓
+    Embedding (batch x seq_length x d_model)
+        ↓
+    + Positional Encoding
+        ↓
+    Multi-Head Attention (self-attention between words)
+        ↓
+    Feedforward Network (fully connected layers)
+        ↓
+    LayerNorm + Residual Connections
+        ↓
+    Stacked Encoders (repeat N times)
+        ↓
+    Final Encoder Output (batch x seq_length x d_model)
